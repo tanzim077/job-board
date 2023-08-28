@@ -11,7 +11,6 @@ const PORT = 9000;
 const app = express();
 
 const typeDefs = await readFile("./schema.graphql", "utf8");
-console.log("🚀 ~ file: server.js:13 ~ typeDefs:", typeDefs);
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 await apolloServer.start();
