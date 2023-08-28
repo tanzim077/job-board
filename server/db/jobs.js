@@ -11,6 +11,10 @@ export async function getJob(id) {
   return await getJobTable().first().where({ id });
 }
 
+export async function getJobsByCompany(id) {
+  return await getJobTable().select().where({ companyId: id });
+}
+
 export async function createJob({ companyId, title, description }) {
   const job = {
     id: generateId(),
