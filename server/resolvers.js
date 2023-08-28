@@ -13,13 +13,20 @@
  * ------------------------
  */
 
+import { GraphQLError } from "graphql";
 import { getCompany } from "./db/companies.js";
 import { getJob, getJobs, getJobsByCompany } from "./db/jobs.js";
 
 export const resolvers = {
   Query: {
     jobs: () => getJobs(),
-    job: (_, { id }) => getJob(id),
+    job: async (_, { id }) => {
+      const job = await getJob(id);
+      if (!job) {
+        throw handleError("Job not found");
+      }
+      return job;
+    },
     company: (_, { id }) => getCompany(id),
   },
 
@@ -32,3 +39,9 @@ export const resolvers = {
     jobs: (company) => getJobsByCompany(company.id),
   },
 };
+
+function handleError(message) {
+  return new GraphQLError(message, {
+    extension: { code: "NOT_FOUND" },
+  });
+}

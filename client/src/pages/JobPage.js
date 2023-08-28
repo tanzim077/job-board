@@ -1,30 +1,42 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import SingleJob from "../components/SingleJob";
 import { getJob } from "../lib/graphql/queries";
-// import SingleJob from "../components/SingleJob";
-const SingleJob = lazy(() => import("../components/SingleJob"));
 
 function JobPage() {
   const { jobId } = useParams();
 
   // const job = jobs.find((job) => job.id === jobId);
-  const [job, setJob] = useState(null);
+  const [job, setJob] = useState({
+    isLoading: true,
+    job: null,
+    error: null,
+  });
+
 
   useEffect(() => {
-    getJob(jobId).then((data) => {
-      setJob(data.job);
-    });
+    getJob(jobId)
+      .then((data) => {
+        setJob({
+          isLoading: false,
+          error: null,
+          job: data.job,
+        });
+      })
+      .catch((err) => {
+        setJob({
+          isLoading: false,
+          job: null,
+          error: err.response.errors[0].message,
+        });
+      });
   }, [jobId]);
 
   return (
     <>
-      <Suspense fallback={<h1>Loading...</h1>}>
-        {job !== null ? (
-          <SingleJob job={job} />
-        ) : (
-          <h1>Loading job details...</h1>
-        )}
-      </Suspense>
+      {!job.isLoading && !job.error && <SingleJob job={job.job} />}
+      {job.isLoading && <h1>Loading job details...</h1>}
+      {job.error && <h1>{job.error}</h1>}
     </>
   );
 }
