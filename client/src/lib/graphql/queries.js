@@ -43,6 +43,7 @@ export const getJob = async (id) => {
       job(id: $id) {
         id
         title
+        description
         company {
           id
           name
@@ -54,4 +55,19 @@ export const getJob = async (id) => {
   const variables = { id };
   const job = await endpoint.request(getJob, variables);
   return job;
+};
+
+export const getCompany = async (id) => {
+  const getCompany = gql`
+    query CompanyQuery($id: ID!) {
+      company(id: $id) {
+        id
+        name
+        description
+      }
+    }
+  `;
+  const variables = { id };
+  const company = await endpoint.request(getCompany, variables);
+  return company;
 };
