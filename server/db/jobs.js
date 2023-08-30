@@ -23,6 +23,7 @@ export async function createJob({ companyId, title, description }) {
     description,
     createdAt: new Date().toISOString(),
   };
+  console.log("🚀 ~ file: jobs.js:26 ~ createJob ~ job:", job)
   await getJobTable().insert(job);
   return job;
 }

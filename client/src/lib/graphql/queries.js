@@ -65,8 +65,8 @@ export const getCompany = async (id) => {
         name
         description
         jobs {
-            id
-            title
+          id
+          title
         }
       }
     }
@@ -74,4 +74,17 @@ export const getCompany = async (id) => {
   const variables = { id };
   const company = await endpoint.request(getCompany, variables);
   return company;
+};
+
+export const createJob = async ({ title, description }) => {
+  const createJob = gql`
+    mutation createJob($input: JobInput) {
+      job: createJob(data: $input) {
+        id
+      }
+    }
+  `;
+  const inputData = { input: { title, description } }; // here the input is the input variable that needs  to  match with the schema
+  const job = await endpoint.request(createJob, inputData); // here the data is the input variable
+  return job;
 };

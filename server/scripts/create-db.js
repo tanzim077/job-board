@@ -32,12 +32,12 @@ await schema.createTable('user', (table) => {
 await connection.table('company').insert([
   {
     id: 'FjcJCHJALA4i',
-    name: 'Facegle',
+    name: 'Facebook',
     description: 'We are a startup on a mission to disrupt social search engines. Think Facebook meet Google.',
   },
   {
     id: 'Gu7QW9LcnF5d',
-    name: 'Goobook',
+    name: 'Google',
     description: 'We are a startup on a mission to disrupt search social media. Think Google meet Facebook.',
   },
 ]);
@@ -66,18 +66,18 @@ await connection.table('job').insert([
   },
 ]);
 
-await connection.table('user').insert([
+await connection.table("user").insert([
   {
-    id: 'AcMJpL7b413Z',
-    companyId: 'FjcJCHJALA4i',
-    email: 'alice@facegle.io',
-    password: 'alice123',
+    id: "AcMJpL7b413Z",
+    companyId: "FjcJCHJALA4i",
+    email: "tanzim@demo.com",
+    password: "ta12345",
   },
   {
-    id: 'BvBNW636Z89L',
-    companyId: 'Gu7QW9LcnF5d',
-    email: 'bob@goobook.co',
-    password: 'bob123',
+    id: "BvBNW636Z89L",
+    companyId: "Gu7QW9LcnF5d",
+    email: "demo@demo.com",
+    password: "ta12345",
   },
 ]);
 
